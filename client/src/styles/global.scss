@@ -1,0 +1,294 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --white: #FFF;
+
+    --gray-100: #f2f2f4;
+    --gray-200: #e1e1e6;
+    --gray-300: #a8a8b3;
+    --gray-400: #85858b;
+    --gray-800: #29292e;
+    --gray-850: #1F2729;
+    --gray-900: #121214;
+
+    --green-200: rgb(66, 238, 66);
+    --green-300: rgb(36, 216, 36);
+    --green-500: rgb(20, 175, 20);
+    --green-700: rgb(5, 131, 5);
+
+
+    --cyan-500: #61dafb;
+    --cyan-700: #1bc4f3;
+    --cyan-900: #0aa6d1;
+
+    --blue-300: #638fd7;
+    --blue-700: #2859a9;
+    --yellow-500: #eba417;
+}
+
+@media (max-width: 720px) {
+    html{
+        font-size: 87.5%;
+    }
+}
+
+@media (max-width: 1080px) {
+    html{
+        font-size: 93.75%;
+    }
+}
+
+body {
+    background: var(--white);
+    color: var(--gray-900);
+}
+
+body, input, textarea, select, button {
+    font: 400 1rem "Roboto", sans-serif;
+}
+
+h1 {
+    color: var(--gray-400);
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+h2 {
+    color: var(--gray-800);
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+h3 {
+    color: var(--gray-800);
+    font-size: 0.8rem;
+    font-weight: 900;
+}
+
+h4 {
+    color: var(--gray-800);
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+button {
+    cursor: pointer;
+}
+
+a {
+    color: inherit;//assumir a cor da fone do elemento pai
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    font-size: 0.75rem;
+    padding: 0.1rem 0.5rem;
+}
+
+input {
+    border: var(--gray-200) 1px solid;
+    border-radius: 0.3rem;
+    color: var(--gray-500);
+    padding: 0.5rem;
+    font-size: 0.8rem;
+    &::placeholder {
+        color: var(--gray-300);
+    }
+}
+
+// Header ======================
+
+header {
+    display: flex; 
+    width: 100%;
+    background: rgb(247,250,251);
+    background: linear-gradient(180deg, rgba(247,250,251,1) 50%, rgba(221,221,221,1) 100%);
+    color: var(--gray-300);
+    height: 3rem;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+}
+
+//main =================================
+main { display: flex; max-width: 1256px; margin: 0 auto; }
+
+.listProjects {
+    height:50px; width:70%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:space-around;
+    height: calc(100vh - 3rem);
+    overflow-y: scroll;
+    padding-bottom: 1rem;
+
+    section {
+        border: 1px var(--gray-200) solid;
+        border-radius: 0.30rem;
+        margin-top: 1rem;
+        width: 45%;
+        min-width: 350px;
+        height: fit-content;
+
+        header {
+            height: 2rem;
+            background: var(--gray-200);
+            background: linear-gradient(180deg, var(--gray-200) 50%, var(--gray-300) 100%);
+            padding: 0 1rem;
+
+            button {
+                background:none;
+                border: 0;
+                margin-left: 0.5rem;
+                font-size: 0.7rem;
+                color: var(--blue-700);
+            }
+        }
+
+        .contentProject {
+
+            padding: 0 1rem;
+
+            h3 {
+                margin: 1rem 0;
+            }
+
+            button {
+                display: flex;
+                padding: 0;
+                background: none;
+                border: 0;
+            }
+
+            button svg {
+                font-size: 0.6rem;
+            }
+
+            .checkTask {
+                color: var(--gray-900);
+                margin-right: 0.5rem;
+            }
+
+            .deleteTask {
+                color: var(--blue-700);
+                margin-left: 0.5rem;
+            }
+
+            ul:first-of-type{
+                color: var(--blue-300);
+            }
+
+            ul:last-of-type{
+                 
+            }
+            hr { 
+                height:2px; 
+                border-width:0; 
+                background-color:var(--gray-100);
+                margin-top: 1rem;
+            }
+        }
+
+        footer {
+            padding: 1rem;
+
+            form {
+
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                
+
+                input {
+                    margin-right: 1rem;
+                    width: 100%;
+                }
+
+                button {
+                    font-size: 0.8rem;
+                    padding: 0.5rem 2rem;
+                    border-radius: 0.3rem;
+                    border: 1px solid var(--green-300);
+                    background: linear-gradient(180deg, var(--green-500) 50%, var(--green-700) 100%);
+                    color: white;
+                }
+                
+            }
+        }
+
+    }
+}
+
+.newProject {
+    background:var(--gray-200);
+    border-radius: 0.3rem;
+    border: 1px solid --gray-300;
+    width:30%;
+    height:fit-content;
+    padding: 2rem 0;
+    margin: 1rem;
+
+
+    section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        header {
+            display: flex;
+            justify-content: center;
+            height: fit-content;
+            margin-bottom: 1rem;
+            background: none;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            align-items: center;
+
+            input {
+                width: 80%;
+            }
+
+            button {
+                width: 80%;
+                font-size: 0.8rem;
+                padding: 0.5rem 2rem;
+                border-radius: 0.3rem;
+                margin-top: 1rem;
+                border: 1px solid var(--cyan-900);
+                background: linear-gradient(180deg, var(--cyan-700) 50%, var(--cyan-900) 100%);
+                color: white;
+            }
+
+        }
+    }
+}
+
+@media (max-width: 720px) {
+    main {
+        flex-direction: column-reverse;
+        justify-content: flex-end;
+    }
+    .newProject{
+        align-self: center;
+    }
+}
+
+@media (max-width: 1080px) {
+    .listProjects {
+        width:100%
+    }
+    .newProject{
+        width:100%
+    }
+}
