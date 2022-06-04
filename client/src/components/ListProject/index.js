@@ -1,74 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BsCheckSquareFill, BsSquare } from "react-icons/bs";
 import { FaPencilAlt, FaRegTrashAlt } from "react-icons/fa";
+import { getProjects } from '../../helpers/functions';
 
-const data = [
-    {
-        pro_id: 1,
-        pro_project: "Project ABC",
-        pro_date_created: new Date(),
-        tasks:[
-        {
-            tas_id: 1,
-            tas_description: "Create the front-end",
-            tas_date_created: new Date(),
-            tas_date_finished: new Date(),
-        },
-        {
-            tas_id: 2,
-            tas_description: "Create the Page 1",
-            tas_date_created: new Date(),
-            tas_date_finished: null,
-        },
-        {
-            tas_id: 3,
-            tas_description: "Create the autenthication",
-            tas_date_created: new Date(),
-            tas_date_finished: new Date(),
-        },
-        ]
-    },
-    {
-        pro_id: 2,
-        pro_project: "Project XYZ",
-        pro_date_created: new Date(),
-        tasks:[
-        {
-            tas_id: 4,
-            tas_description: "Create the Form",
-            tas_date_created: new Date(),
-            tas_date_finished: null,
-        },
-        {
-            tas_id: 5,
-            tas_description: "Create the Back-end",
-            tas_date_created: new Date(),
-            tas_date_finished: new Date(),
-        },
-        {
-            tas_id: 6,
-            tas_description: "Create the Data Base",
-            tas_date_created: new Date(),
-            tas_date_finished: null,
-        },
-        {
-            tas_id: 7,
-            tas_description: "Create the Layout",
-            tas_date_created: new Date(),
-            tas_date_finished: null,
-        },
-        ]
-    }   
-];
 
 export const ListProject = () => {
+
+    const [projects, setProjects] = useState([]);
+
+    useEffect( () => {
+  
+        getProjects()
+        .then( (data) => setProjects(data) );
+        
+    }, []);
+
+    console.log("rrrr",projects);
+
     return (
+        
         <article className="listProjects" >
         {
-            data.map((project) =>{
+            projects.map((project) =>{
 
-                const toDo = project.tasks.filter((task) => task.tas_date_finished === null);
-                const done = project.tasks.filter((task) => task.tas_date_finished !== null);
+                const toDo = project.tasks.filter((task) => task.tas_done_at === null);
+                const done = project.tasks.filter((task) => task.tas_done_at !== null);
 
                 return (
                     <section key={ project.pro_id }>

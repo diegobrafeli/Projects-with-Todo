@@ -24,7 +24,7 @@ router.post("/projects", ensureAuthenticated, createProjectController.handle);
 router.get("/projects/list", ensureAuthenticated, listProjectController.handle);
 
 router.post("/tasks", ensureAuthenticated, createTaskController.handle);
-router.get("/tasks/list/:pro_id",  listTaskController.handle);
+router.get("/tasks/list/:pro_id", ensureAuthenticated,  listTaskController.handle);
 
 
 

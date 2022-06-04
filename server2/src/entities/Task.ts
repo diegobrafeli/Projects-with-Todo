@@ -11,7 +11,7 @@ class Task {
     tas_pro_id: string;
 
     @JoinColumn({name: "tas_pro_id"})
-    @ManyToOne(() => Project)
+    @ManyToOne(() => Project, (project) => project.tasks)
     project: Project
 
     @Column()
@@ -20,8 +20,8 @@ class Task {
     @CreateDateColumn()
     tas_created_at: Date;
 
-    @UpdateDateColumn()
-    tas_updated_at: Date;
+    @Column()
+    tas_done_at: Date;
 
     @Column()
     tas_deleted_at: Date;

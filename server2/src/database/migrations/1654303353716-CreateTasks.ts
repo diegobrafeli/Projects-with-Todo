@@ -26,9 +26,10 @@ export class CreateTasks1654303353716 implements MigrationInterface {
                         default: "now()"
                     },
                     {
-                        name: "tas_updated_at",
+                        name: "tas_done_at",
                         type: "timestamp",
-                        default: "now()"
+                        isNullable: true,
+                        default: null
                     },
                     {
                         name: "tas_deleted_at",

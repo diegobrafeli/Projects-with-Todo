@@ -10,7 +10,7 @@ class ListProjectService {
             where: {
                 pro_use_id: use_id
             },
-           // relations: ["user"]
+           relations: ["tasks"]
         })
         
         return projects

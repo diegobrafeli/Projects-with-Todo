@@ -1,5 +1,5 @@
 import React from 'react'
-import { getProjects } from '../../helpers/project';
+import { creteNewProject } from '../../helpers/functions';
 import { useForm } from '../../hooks/useForm';
 
 export const ProjectAdd = () => {
@@ -15,7 +15,7 @@ export const ProjectAdd = () => {
             return;
         }
 
-        getProjects()
+        creteNewProject( newProject );
 
         // const newTodo = {
         //     id: new Date().getTime(),
@@ -25,8 +25,6 @@ export const ProjectAdd = () => {
 
         // handleAddTodo(newTodo);
 
-        console.log(newProject);
-
 
         reset();
     }
@@ -35,18 +33,18 @@ export const ProjectAdd = () => {
         <aside className="newProject">
             <section>
                 <header>
-                <h4>Create a new project</h4>
+                    <h4>Create a new project</h4>
                 </header>
                 <form onSubmit={ handleSubmit }>
-                <input 
-                type="text" 
-                name='newProject'
-                placeholder="Project name" 
-                autoComplete="off" 
-                value={ newProject }
-                onChange={ handleInputChange }
-                />
-                <button>Create Project</button>
+                    <input 
+                        type="text" 
+                        name='newProject'
+                        placeholder="Project name" 
+                        autoComplete="off" 
+                        value={ newProject }
+                        onChange={ handleInputChange }
+                    />
+                    <button>Create Project</button>
                 </form>
             </section>
         </aside>

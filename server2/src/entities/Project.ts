@@ -1,6 +1,7 @@
-import {Entity, PrimaryColumn, Column, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToOne} from "typeorm";
+import {Entity, PrimaryColumn, Column, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToOne, OneToMany} from "typeorm";
 import {v4 as uuid} from "uuid";
 import { User } from "./User";
+import { Task } from "./Task";
 
 @Entity("projects")
 class Project {
@@ -25,6 +26,9 @@ class Project {
 
     @Column()
     pro_deleted_at: Date;
+
+    @OneToMany(() => Task, (task) => task.project)
+    tasks: Task[]
 
     constructor() {
         if(!this.pro_id){
