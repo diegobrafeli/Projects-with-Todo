@@ -2,7 +2,7 @@ import React from 'react'
 import { creteNewProject } from '../../helpers/functions';
 import { useForm } from '../../hooks/useForm';
 
-export const ProjectAdd = () => {
+export const ProjectAdd = ({setProjects}) => {
 
     const [ { newProject }, handleInputChange, reset ] = useForm({
         newProject: ''
@@ -15,7 +15,11 @@ export const ProjectAdd = () => {
             return;
         }
 
-        creteNewProject( newProject );
+        creteNewProject( newProject )
+        .then( (project) => {
+            project['tasks'] = [];
+            setProjects((projects)=>([...projects, project]));
+        });
 
         // const newTodo = {
         //     id: new Date().getTime(),

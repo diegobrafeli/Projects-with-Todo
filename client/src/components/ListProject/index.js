@@ -1,21 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { BsCheckSquareFill, BsSquare } from "react-icons/bs";
 import { FaPencilAlt, FaRegTrashAlt } from "react-icons/fa";
 import { getProjects } from '../../helpers/functions';
 
 
-export const ListProject = () => {
+export const ListProject = ({token, setToken, projects, setProjects}) => {
 
-    const [projects, setProjects] = useState([]);
-
-    useEffect( () => {
-  
+    const listProject = (token) =>{
         getProjects()
-        .then( (data) => setProjects(data) );
-        
-    }, []);
-
-    console.log("rrrr",projects);
+        .then( (data) => setProjects(data) )
+    }
+    
+    useMemo(() => listProject(token), [token]);
 
     return (
         
