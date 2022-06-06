@@ -1,8 +1,15 @@
 import React from 'react'
 import { creteNewTask } from '../../helpers/functions';
 import { useForm } from '../../hooks/useForm';
+import { useTransactions } from '../../hooks/useTransactions';
 
-export const TaskAdd = ({ tas_pro_id, setProjects, projects }) => {
+export const TaskAdd = ({ tas_pro_id }) => {
+
+    const dataContext = useTransactions();
+    const {
+        projects, 
+        setProjects,
+    } = dataContext;
 
     const [ { newTask }, handleInputChange, reset ] = useForm({
         newTask: ''
@@ -19,9 +26,19 @@ export const TaskAdd = ({ tas_pro_id, setProjects, projects }) => {
         .then( (currentTask) => {
             const projectChangedIndex = projects.findIndex((project) => project.pro_id === currentTask.tas_pro_id);
             const oldTasks = [...projects[projectChangedIndex].tasks];
+            const lastTask = oldTasks.length;
             projects[projectChangedIndex]["tasks"] = [...oldTasks, currentTask];
-            setProjects(projects);
-        });
+            const taskChanged = projects[projectChangedIndex].tasks[lastTask];
+            taskChanged["tas_done_at"] = null;
+            taskChanged["tas_deleted_at"] = null;
+            setProjects([...projects]);
+        })
+        .catch(
+            (err) => {
+                console.error(err);
+                alert("It is not possible to create a task with the same name as another in this project.")
+            }
+        );
 
 
         reset();

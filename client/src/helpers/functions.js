@@ -86,7 +86,8 @@ const getCheckToken = async (token, setAuthenticated) => {
     })
     .catch(function (error) {
         console.error(error);
-        localStorage.removeItem('token_todo');
+        localStorage.clear();
+        throw(error);
     });
 
 };
@@ -107,6 +108,7 @@ const getLogin = async ( users, id_user_todo) => {
     })
     .catch(function (error) {
         console.error(error);
+        throw(error);
     });
 }
 

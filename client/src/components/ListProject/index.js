@@ -1,20 +1,18 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { BsCheckSquareFill} from "react-icons/bs";
 import { FaPencilAlt, FaRegTrashAlt } from "react-icons/fa";
-import { getProjects } from '../../helpers/functions';
 import { ListTaskDo } from '../ListTaskDo';
 import { TaskAdd } from '../TaskAdd';
+import { useTransactions } from '../../hooks/useTransactions';
 
 
-export const ListProject = ({token, projects, setProjects}) => {
+export const ListProject = () => {
 
-    const listProject = () =>{
-        getProjects()
-        .then( (data) => setProjects(data) )
-    }
-    
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    useMemo(() => listProject(), [token]);
+    const dataContext = useTransactions();
+    const {
+        projects, 
+        setProjects,
+    } = dataContext;
 
 
     return (
@@ -57,7 +55,8 @@ export const ListProject = ({token, projects, setProjects}) => {
                         < TaskAdd 
                             tas_pro_id = { project.pro_id } 
                             projects = {projects}
-                            setProjects = {setProjects}/>
+                            setProjects = {setProjects}
+                        />
                     </footer>
                     </section>
                 )

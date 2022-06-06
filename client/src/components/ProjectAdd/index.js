@@ -1,12 +1,17 @@
 import React from 'react'
-import { creteNewProject } from '../../helpers/functions';
 import { useForm } from '../../hooks/useForm';
+import { useTransactions } from '../../hooks/useTransactions';
 
-export const ProjectAdd = ({setProjects}) => {
+export const ProjectAdd = () => {
 
     const [ { newProject }, handleInputChange, reset ] = useForm({
         newProject: ''
     });
+
+    const dataContext = useTransactions();
+    const {
+        creteNewProjectFunction,
+    } = dataContext;
 
     const handleAddProject = (e) =>{
         e.preventDefault();
@@ -15,11 +20,7 @@ export const ProjectAdd = ({setProjects}) => {
             return;
         }
 
-        creteNewProject( newProject )
-        .then( (project) => {
-            project['tasks'] = [];
-            setProjects((projects)=>([...projects, project]));
-        });
+        creteNewProjectFunction(newProject);
 
         reset();
     }

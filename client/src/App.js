@@ -5,10 +5,10 @@ import { TransactionsProvider } from './hooks/useTransactions';
 function App() {
 
   return (
-    // <TransactionsProvider>
-    //   <TodoApp />
-    // </TransactionsProvider>
-    <TodoApp />
+    <TransactionsProvider>
+      <TodoApp />
+    </TransactionsProvider>
+    // <TodoApp />
   );
 }
 
