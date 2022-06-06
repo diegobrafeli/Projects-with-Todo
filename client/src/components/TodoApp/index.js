@@ -1,18 +1,10 @@
-import axios from 'axios';
 import React, { useMemo, useState } from 'react';
-import { getCheckToken } from '../../helpers/functions';
+import { getCheckToken, getLogin } from '../../helpers/functions';
 import { ListProject } from '../ListProject';
 import { ProjectAdd } from '../ProjectAdd';
 
 let tokenStorage = localStorage.getItem("token_todo");
 
-
-const instance = axios.create({
-    baseURL: 'http://localhost:3333',
-    headers:{
-        Authorization: `Bearer ${tokenStorage}`,
-    }
-});
 
 const users = [
     {
@@ -50,21 +42,15 @@ export const TodoApp = () => {
         ? localStorage.setItem('id_user_todo', "0")
         : localStorage.setItem('id_user_todo', "1");
 
-        let id_user_todo = localStorage.getItem('id_user_todo')
+        let id_user_todo = localStorage.getItem('id_user_todo');
 
-        instance.post('/login', {
-            use_email: users[id_user_todo].use_email,
-            use_password: users[id_user_todo].use_password,
-        })
-        .then(function (response) {
-            const {data} = response;
+        getLogin( users, id_user_todo)
+        .then((data) => {
             localStorage.setItem('token_todo', data);
             tokenStorage = data;
             setToken(data);
-        })
-        .catch(function (error) {
-            console.error(error);
         });
+
     }
     
     const handleLogout = () =>{
@@ -97,7 +83,6 @@ export const TodoApp = () => {
                 <>
                     <ListProject 
                         token= {token} 
-                        setToken= {setToken} 
                         projects = {projects}
                         setProjects = {setProjects} 
                     />

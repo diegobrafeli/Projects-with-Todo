@@ -1,20 +1,24 @@
-import React, { useMemo, useState } from 'react';
-import { BsCheckSquareFill, BsSquare } from "react-icons/bs";
+import React, { useMemo } from 'react';
+import { BsCheckSquareFill} from "react-icons/bs";
 import { FaPencilAlt, FaRegTrashAlt } from "react-icons/fa";
 import { getProjects } from '../../helpers/functions';
+import { ListTaskDo } from '../ListTaskDo';
+import { TaskAdd } from '../TaskAdd';
 
 
-export const ListProject = ({token, setToken, projects, setProjects}) => {
+export const ListProject = ({token, projects, setProjects}) => {
 
-    const listProject = (token) =>{
+    const listProject = () =>{
         getProjects()
         .then( (data) => setProjects(data) )
     }
     
-    useMemo(() => listProject(token), [token]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useMemo(() => listProject(), [token]);
+
 
     return (
-        
+       
         <article className="listProjects" >
         {
             projects.map((project) =>{
@@ -27,33 +31,21 @@ export const ListProject = ({token, setToken, projects, setProjects}) => {
                     <header>
                         <h2>{ project.pro_project }</h2>
                         <div>
-                        <button><FaPencilAlt /></button>
-                        <button><FaRegTrashAlt/></button>
+                            <button><FaPencilAlt /></button>
+                            <button><FaRegTrashAlt/></button>
                         </div>
                     </header>
                     <div className="contentProject">
                         <h3>To Do</h3>
-                        <ul>
-                        {
-                            toDo.map((task)=>{
-                            return (
-                                <li key={task.tas_id}>
-                                <button className="checkTask"><BsSquare/></button>
-                                <p>{ task.tas_description }</p>
-                                <button className="deleteTask"><FaRegTrashAlt/></button>
-                                </li>
-                            )
-                            })
-                        }
-                        </ul>
+                        <ListTaskDo toDo= {toDo} projects = {projects} />
                         <h3>Done</h3>
                         <ul>
                         {
                             done.map((task)=>{
                             return (
                                 <li key={ task.tas_id }>
-                                <button className="checkTask"><BsCheckSquareFill/></button>
-                                <p>{ task.tas_description }</p>
+                                    <button className="checkTask"><BsCheckSquareFill/></button>
+                                    <p>{ task.tas_description }</p>
                                 </li>
                             )
                             })
@@ -62,10 +54,10 @@ export const ListProject = ({token, setToken, projects, setProjects}) => {
                         <hr />
                     </div>
                     <footer>
-                        <form action="">
-                        <input name="addTask" type="text" placeholder="Task" autoComplete="off"/>
-                        <button>Add</button>
-                        </form>
+                        < TaskAdd 
+                            tas_pro_id = { project.pro_id } 
+                            projects = {projects}
+                            setProjects = {setProjects}/>
                     </footer>
                     </section>
                 )

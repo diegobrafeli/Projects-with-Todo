@@ -8,7 +8,7 @@ export const ProjectAdd = ({setProjects}) => {
         newProject: ''
     });
 
-    const handleSubmit = (e) =>{
+    const handleAddProject = (e) =>{
         e.preventDefault();
         
         if ( newProject.trim().length <= 1 ){
@@ -21,15 +21,6 @@ export const ProjectAdd = ({setProjects}) => {
             setProjects((projects)=>([...projects, project]));
         });
 
-        // const newTodo = {
-        //     id: new Date().getTime(),
-        //     desc: description,
-        //     done: false,
-        // }
-
-        // handleAddTodo(newTodo);
-
-
         reset();
     }
 
@@ -39,7 +30,7 @@ export const ProjectAdd = ({setProjects}) => {
                 <header>
                     <h4>Create a new project</h4>
                 </header>
-                <form onSubmit={ handleSubmit }>
+                <form onSubmit={ handleAddProject }>
                     <input 
                         type="text" 
                         name='newProject'

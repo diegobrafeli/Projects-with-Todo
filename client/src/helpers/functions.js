@@ -52,9 +52,28 @@ const creteNewProject = async ( pro_project ) => {
 
 };
 
+const creteNewTask = async ( tas_pro_id, tas_description ) => {
+
+    instance.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("token_todo")}`;
+
+    return instance.post('/tasks', {
+        tas_pro_id,
+        tas_description
+    })
+    .then(function (response) {
+        const {data} = response;
+        console.log("creteNewTask:",data);
+        return data
+    })
+    .catch(function (error) {
+        console.error(error);
+    });
+
+};
+
 const getCheckToken = async (token, setAuthenticated) => {
 
-    instance.get('/check/token/'+token)
+    return instance.get('/check/token/'+token)
     .then(function (response) {
         const {data} = response;
 
@@ -63,6 +82,7 @@ const getCheckToken = async (token, setAuthenticated) => {
         console.log("Token expire:",expire);
 
         setAuthenticated(true);
+        return true
     })
     .catch(function (error) {
         console.error(error);
@@ -71,11 +91,32 @@ const getCheckToken = async (token, setAuthenticated) => {
 
 };
 
+const getLogin = async ( users, id_user_todo) => {
+
+    instance.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("token_todo")}`;
+
+    return instance.post('/login', {
+        use_email: users[id_user_todo].use_email,
+        use_password: users[id_user_todo].use_password,
+    })
+    .then(function (response) {
+        const {data} = response;
+        return data;
+        // localStorage.setItem('token_todo', data);
+        // setToken(data);
+    })
+    .catch(function (error) {
+        console.error(error);
+    });
+}
+
 
 
 export {
     getProjects,
     getTasks,
     creteNewProject,
-    getCheckToken
+    getCheckToken,
+    creteNewTask,
+    getLogin
 }
