@@ -19,14 +19,71 @@ const getProjects = async () => {
 
 };
 
-const getTasks = async () => {
+// const getTasks = async () => {
+
+//     instance.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("token_todo")}`;
+
+//     instance.get('/tasks/list/b9470ce4-248f-43f9-a3fc-94442759e820')
+//     .then(function (response) {
+//         const {data} = response;
+//         console.log(data);
+//     })
+//     .catch(function (error) {
+//         console.error(error);
+//     });
+
+// };
+
+const doneTask = async (tas_id) => {
 
     instance.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("token_todo")}`;
 
-    instance.get('/tasks/list/b9470ce4-248f-43f9-a3fc-94442759e820')
+    return instance.put('/tasks/'+tas_id)
     .then(function (response) {
         const {data} = response;
         console.log(data);
+        return {
+            id_done_task: data.tas_id,
+            date_done_task: data.date,
+        }
+    })
+    .catch(function (error) {
+        console.error(error);
+    });
+
+};
+
+const deleteTask = async (tas_id) => {
+
+    instance.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("token_todo")}`;
+
+    return instance.delete('/tasks/'+tas_id)
+    .then(function (response) {
+        const {data} = response;
+        console.log(data);
+        return {
+            id_deleted_task: data.tas_id,
+            date_deleted_task: data.date,
+        }
+    })
+    .catch(function (error) {
+        console.error(error);
+    });
+
+};
+
+const deleteProject = async (pro_id) => {
+
+    instance.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("token_todo")}`;
+
+    return instance.delete('/projects/'+pro_id)
+    .then(function (response) {
+        const {data} = response;
+        console.log(data);
+        return {
+            id_deleted_project: data.pro_id,
+            date_deleted_project: data.date,
+        }
     })
     .catch(function (error) {
         console.error(error);
@@ -116,9 +173,12 @@ const getLogin = async ( users, id_user_todo) => {
 
 export {
     getProjects,
-    getTasks,
+    // getTasks,
     creteNewProject,
     getCheckToken,
     creteNewTask,
-    getLogin
+    getLogin,
+    doneTask,
+    deleteTask,
+    deleteProject
 }

@@ -8,9 +8,11 @@ class ListProjectService {
         const projectsRespository = getCustomRepository( ProjectsRepositories );
         const projects = await projectsRespository.find({
             where: {
-                pro_use_id: use_id
+                pro_use_id: use_id,
+                pro_deleted_at: null
             },
-           relations: ["tasks"]
+            order: {pro_project: "ASC"},
+            relations: ["tasks"],
         })
         
         return projects
