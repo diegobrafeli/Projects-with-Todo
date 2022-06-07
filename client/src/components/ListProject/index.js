@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BsCheckSquareFill} from "react-icons/bs";
-import { FaPencilAlt, FaRegTrashAlt } from "react-icons/fa";
+import { FaPencilAlt, FaRegTrashAlt, FaCalendarAlt } from "react-icons/fa";
 import { ListTaskDo } from '../ListTaskDo';
 import { TaskAdd } from '../TaskAdd';
 import { useTransactions } from '../../hooks/useTransactions';
-import { deleteProject } from '../../helpers/functions';
+import { deleteProject, parseDate } from '../../helpers/functions';
 import ReactTooltip from 'react-tooltip';
 
 
@@ -16,66 +16,142 @@ export const ListProject = () => {
         setProjects,
     } = dataContext;
 
+    //bug because react-18-------------------------------
+    const [showTooltip, setShowTooltip] = useState(true);
+    //bug because react-18-------------------------------
+
     const handleDeleteProject = (pro_id) => {
         deleteProject(pro_id)
-        .then(({ id_deleted_project, date_deleted_project }) => {
+        .then(({ id_deleted_project }) => {
 
             const projectChangedIndex = projects.findIndex((project) => project.pro_id === id_deleted_project);
-            setProjects((projects)=> projects.splice(projectChangedIndex, 1))
-            alert(`Project: ${projects[projectChangedIndex].pro_project}, was deleted!`)
+            const projectDeleted = projects.splice(projectChangedIndex, 1);
+            setProjects([...projects]);
+            alert(`Project: ${projectDeleted[0].pro_project}, was deleted!`);
+
+            //bug because react-18-------------------------------
+            setShowTooltip(false);
+            setTimeout(() => setShowTooltip(true), 5);
+            //bug because react-18-------------------------------
+
         })
     }
 
-
+    const handleX = () => {
+        projects[0].tasks[0]['tas_description'] = 'parada';
+        console.log("xh",projects);
+    }
+    
     return (
-       
-        <article className="listProjects" >
-        {
-            projects.map((project) =>{
-                const toDo = project.tasks.filter((task) => (task.tas_done_at === null && task.tas_deleted_at === null));
-                const done = project.tasks.filter((task) => task.tas_done_at !== null && task.tas_deleted_at === null);
+       <>
+            <article className="listProjects" >
+                
+            {               
+                projects.map((project) =>{
+                    const toDo = project.tasks.filter((task) => (task.tas_done_at === null && task.tas_deleted_at === null));
+                    const done = project.tasks.filter((task) => task.tas_done_at !== null && task.tas_deleted_at === null);
 
-                return (
-                    <section key={ project.pro_id }>
-                        <header>
-                            <h2 data-tip={ project.pro_created_at }>{ project.pro_project }</h2>
-                            <div>
-                                <button><FaPencilAlt /></button>
-                                <button onClick={ () => handleDeleteProject( project.pro_id )}><FaRegTrashAlt/></button>
-                            </div>
-                        </header>
-                        <div className="contentProject">
-                            <h3>To Do</h3>
-                            <ListTaskDo toDo= {toDo} projects = {projects} />
-                            <h3>Done</h3>
-                            <ul>
+                    return (
+                        
+                        <section key={ project.pro_id }>
+
                             {
-                                done.map((task)=>{
-                                return (
-                                    <li key={ task.tas_id }>
-                                        <button className="checkTask">
-                                            <BsCheckSquareFill/>
-                                        </button>
-                                        <p>{ task.tas_description }</p>
-                                    </li>
-                                )
-                                })
+                                showTooltip && 
+                                    <ReactTooltip 
+                                        effect='solid' 
+                                        place='top' 
+                                        type='dark' 
+                                        // globalEventOff='click'
+                                    />
                             }
-                            </ul>
-                            <hr />
-                        </div>
-                        <footer>
-                            < TaskAdd 
-                                tas_pro_id = { project.pro_id } 
-                                projects = {projects}
-                                setProjects = {setProjects}
-                            />
-                        </footer>
-                        <ReactTooltip />
-                    </section>
-                )
-            })
-        }
-        </article>
+
+                            <header>
+                                <div style={{'display':'flex', 'alignItems':'center'}}>
+                                    <h2>{ project.pro_project }</h2>
+                                    <button
+                                        style={{margin:'0 0.5rem', display: 'flex', alignItems:'center'}} 
+                                        data-tip={ 'Date: '+ parseDate(project.pro_created_at) } 
+                                        //bug because react-18 --------------------
+                                        onMouseLeave={() => {
+                                            setShowTooltip(false);
+                                            setTimeout(() => setShowTooltip(true), 5);
+                                        }}
+                                        onMouseEnter={() => setShowTooltip(true)}
+                                        //bug because react-18 --------------------
+
+                                        // data-event='click' 
+                                        // data-event-off='dblclick'
+                                        // onDoubleClick={() => {
+                                        //     setShowTooltip(false);
+                                        //     setTimeout(() => setShowTooltip(true), 50);
+                                        // }}
+                                    >
+                                        <FaCalendarAlt />
+                                    </button>
+                                </div>
+
+                                <div>
+                                    <button
+                                        data-tip={ 'Edit' } 
+                                        //bug because react-18 --------------------
+                                        onMouseLeave={() => {
+                                            setShowTooltip(false);
+                                            setTimeout(() => setShowTooltip(true), 5);
+                                        }}
+                                        onMouseEnter={() => setShowTooltip(true)}
+                                        //bug because react-18 --------------------
+                                        onClick={handleX}
+                                    >
+                                        <FaPencilAlt />
+                                    </button>
+                                    <button 
+                                        onClick={ () => handleDeleteProject( project.pro_id )}
+                                        data-tip={ 'Delete' } 
+                                        //bug because react-18 --------------------
+                                        onMouseLeave={() => {
+                                            setShowTooltip(false);
+                                            setTimeout(() => setShowTooltip(true), 5);
+                                        }}
+                                        onMouseEnter={() => setShowTooltip(true)}
+                                        //bug because react-18 --------------------
+                                    >
+                                        <FaRegTrashAlt/>
+                                    </button>
+                                </div>
+                            </header>
+                            <div className="contentProject">
+                                <h3>To Do</h3>
+                                <ListTaskDo toDo= {toDo} projects = {projects} />
+                                <h3>Done</h3>
+                                <ul>
+                                {
+                                    done.map((task)=>{
+                                    return (
+                                        <li key={ task.tas_id }>
+                                            <button className="checkTask">
+                                                <BsCheckSquareFill/>
+                                            </button>
+                                            <p>{ task.tas_description }</p>
+                                        </li>
+                                    )
+                                    })
+                                }
+                                </ul>
+                                <hr />
+                            </div>
+                            <footer>
+                                < TaskAdd 
+                                    tas_pro_id = { project.pro_id } 
+                                    projects = {projects}
+                                    setProjects = {setProjects}
+                                />
+                            </footer> 
+ 
+                        </section>
+                    )
+                })
+            }
+            </article>
+       </>
     )
 }

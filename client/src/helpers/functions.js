@@ -63,7 +63,6 @@ const deleteTask = async (tas_id) => {
         console.log(data);
         return {
             id_deleted_task: data.tas_id,
-            date_deleted_task: data.date,
         }
     })
     .catch(function (error) {
@@ -128,6 +127,13 @@ const creteNewTask = async ( tas_pro_id, tas_description ) => {
 
 };
 
+const parseDate = (dateLong) => {
+    const date = new Date(dateLong);
+    const dateParsed = new Intl.DateTimeFormat('pt-BR').format(date)
+    //const dateParse = date.getDate()+'/'+date.getMonth()+'/'+date.getFullYear()
+    return dateParsed
+}
+
 const getCheckToken = async (token, setAuthenticated) => {
 
     return instance.get('/check/token/'+token)
@@ -174,6 +180,7 @@ const getLogin = async ( users, id_user_todo) => {
 export {
     getProjects,
     // getTasks,
+    parseDate,
     creteNewProject,
     getCheckToken,
     creteNewTask,

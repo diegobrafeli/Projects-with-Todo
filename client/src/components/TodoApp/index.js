@@ -19,7 +19,7 @@ export const TodoApp = () => {
     return (
         <>
         <header>
-            <h1>EDirectinsure TODO List</h1>
+            <h1>TODO List</h1>
             <nav style={{'display': 'flex'}}>
                 <button 
                     style={{'color': 'green', 'border': 'none', 'background':'none'}} 

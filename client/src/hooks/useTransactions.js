@@ -7,14 +7,14 @@ let tokenStorage = localStorage.getItem("token_todo");
 
 const users = [
     {
-        use_name: "Luana",
-        use_email: "luana@gmail.com",
-        use_password: "654321"
-    },
-    {
         use_name: "Diego",
         use_email: "diego@gmail.com",
         use_password: "123456"
+    },
+    {
+        use_name: "Luana",
+        use_email: "luana@gmail.com",
+        use_password: "654321"
     }
 ];
 

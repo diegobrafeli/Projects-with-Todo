@@ -20,7 +20,6 @@ class DeleteProjectService {
         return {
             pro_id,
             "satatus":"deleted",
-            "date": now
         }
     }
 
